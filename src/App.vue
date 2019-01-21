@@ -11,8 +11,9 @@ export default {
 </script>
 
 <style>
+  @import "assets/css/public.css";
   @import "assets/css/common.css";
-  @import "assets/css/wheel.css";
+  @import "assets/css/font-awesome.min.css";
   #app{
     width:100%;
   }

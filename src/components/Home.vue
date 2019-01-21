@@ -3,9 +3,9 @@
     <div class='header'>
       <div class='container'>
         <div class='row nav-bar'>
-          <a class='logo' href=''>
-            <img src='../../static/imgs/logo.jpg' alt='logo'/>
-          </a>
+          <router-link class='logo' to='/home'>
+            <img src='../assets/images/head-pic.png' alt='logo'/>
+          </router-link>
           <div class='nav'>
             <a href='../../static/pages/login.html'>登录</a>
           </div>
@@ -17,7 +17,10 @@
 
 <script>
   export default {
-    name:"Home"
+    name: 'Home',
+    created() {
+      document.title='Mr.Huang的前端笔记'
+    }
   }
 </script>
 
