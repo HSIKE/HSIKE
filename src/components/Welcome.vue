@@ -10,11 +10,11 @@
             <h4>H.SiK.E</h4>
           </div>
           <img class='me-logo' src='../assets/images/head-pic.png' alt='oops, 出了点问题，图片无法加载'>
-          <router-link class="entry" to="/home" title="点此进入">
+          <router-link class="entry" to="/notes" title="点此进入">
             Mr.Huang的web前端笔记
           </router-link>
           <p class="motto">
-            Speak Less, Read More,<br/>
+            Talk Less, Read More,<br/>
             Think More, Code More, Do More.
           </p>
         </div>
@@ -46,7 +46,7 @@
             <h4>关于本站</h4>
           </div>
           <div class="tech">
-            <img src="../assets/images/vue.png">
+            <img src="../assets/images/vue.png" alt='Vue' title='Vue'>
           </div>
         </div>
       </div>
@@ -64,27 +64,15 @@
         </div>
       </div>
     </div>
-    <button @click="backToTop" class="back-to-top" ref="top">
-      <i class="fa fa-angle-double-up"></i>
-    </button>
+    <ToTop ref='toTop'/>
   </div>
 </template>
 
 <script>
-  import backToTop from '../assets/js/backToTop'
+  import ToTop from "./ToTop";
   export default {
     name: 'Welcome',
-    methods: {
-      backToTop,
-    },
-    created() {
-      window.onscroll=()=>{
-        let top=window.pageYOffset||
-            document.documentElement.scrollTop||
-            document.body.scrollTop;
-        this.$refs.top.style.right=top>500 ? '10px' : '';
-      }
-    }
+    components:{ ToTop },
   }
 </script>
 
