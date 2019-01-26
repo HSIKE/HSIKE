@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Welcome from "../components/Welcome";
 import Home from "../components/Home";
+import ArticleList from "../components/ArticleList";
+import Article from "../components/Article";
 
 Vue.use(Router);
 
@@ -11,12 +13,25 @@ export default new Router({
     {
       path:'/',
       name:'welcome',
-      component:Welcome
+      component:Welcome,
     },
     {
       path:'/notes',
-      name:'home',
-      component:Home
+      name:'notes',
+      component:Home,
+      children:[
+        {
+          path:'article/:id?',
+          name:'article',
+          component:Article
+        },
+        {
+          path:':sort?/:tag?',
+          name:'list',
+          component:ArticleList
+        },
+        
+      ]
     }
   ],
   linkActiveClass:'active',

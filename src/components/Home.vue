@@ -3,13 +3,13 @@
     <div class='header'>
       <div class='container'>
         <div class='row nav-bar'>
-          <router-link class='logo' to='/home' exact>
+          <router-link class='logo' to='/notes' exact>
             <img src='../assets/images/head-pic.png' alt='logo'/>
           </router-link>
           <div class='nav'>
-            <router-link class='nav-item' to='/notes'>首页</router-link>
+            <router-link class='nav-item' to='/notes' exact>首页</router-link>
             <router-link class='nav-item' v-for='item in navList'
-                :key='item.title' :to='item.link'>
+                :key='item.title' :to='`/notes${item.link}`'>
               {{ item.title }}
             </router-link>
             <router-link class='nav-item login' to='/login' title='登录'>
@@ -27,12 +27,60 @@
     <div class='main'>
       <div class='container clear'>
         <div class='left'>
-          <ul class='content'>
-            <li class='con-item'></li>
+          <ul class='con-left'>
+            <li class='con-item statement'>
+              <h4 class="title">
+                <i class="fa fa-volume-up"></i>
+                &nbsp;关于&nbsp;
+                <span>Announcement</span>
+              </h4>
+              <div class="content">
+                <router-link to="/notes/css">test</router-link>
+                <router-link to="/notes/article">test</router-link>
+              </div>
+            </li>
+            <li class="con-item contact">
+              <h4 class="title">
+                <i class="fa fa-address-book-o"></i>
+                &nbsp;联系我&nbsp;
+                <span>Contact me</span>
+              </h4>
+              <div class="content">
+              </div>
+            </li>
+            <li class="con-item recommend">
+              <h4 class="title">
+                <i class="fa fa-star-o"></i>
+                &nbsp;推荐&nbsp;
+                <span>Recommendations</span>
+              </h4>
+              <div class="content">
+              </div>
+            </li>
+            <li class="con-item tags">
+              <h4 class="title">
+                <i class="fa fa-tags"></i>
+                &nbsp;标签&nbsp;
+                <span>Tags</span>
+              </h4>
+              <div class="content">
+              </div>
+            </li>
+            <li class="con-item friends">
+              <h4 class="title">
+                <i class="fa fa-handshake-o"></i>
+                &nbsp;友链&nbsp;
+                <span>Links</span>
+              </h4>
+              <div class="content">
+              </div>
+            </li>
           </ul>
         </div>
         <div class='right'>
-          <div class='content'></div>
+          <div class='con-right'>
+            <router-view></router-view>
+          </div>
         </div>
       </div>
     </div>
@@ -56,15 +104,16 @@
         ]
       }
     },
-    created() {
-      document.title='Mr.Huang'
-    },
+    created() { document.title='Mr.Huang'; },
     methods:{
       searchFocus(e){
         let search=document.querySelector('div.search');
         e.type==='focus' ? search.classList.add('active')
                          : search.classList.remove('active');
       }
+    },
+    updated(){
+      console.log(this.$route);
     }
   }
 </script>

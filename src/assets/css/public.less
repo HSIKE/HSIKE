@@ -50,21 +50,31 @@ body{
   padding-left: 15px;
   padding-right: 15px;
 }
-.clear{
-  &::after{
-    display: block;
-    width:0;height:0;
-    content: '';
-    clear: both;
-  }
+.clear::after{
+  display: block;
+  width:0;height:0;
+  content: '';
+  clear: both;
+}
+.left{
+  width:100%;
+  float:left;
+  padding:0 15px;
+}
+.right{
+  width:100%;
+  float: left;
+  padding:0 15px;
 }
 @media (min-width: 768px) {
   .container{width:720px;}
   html{font-size: 14px;}
 }
 @media (min-width: 992px) {
-  .container{width:940px;}
   html{font-size: 16px;}
+  .container{width:960px;}
+  .left{width:30%;}
+  .right{width:70%;}
 }
 @media (min-width: 1200px) {
   .container{width:1190px;}

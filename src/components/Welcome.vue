@@ -6,7 +6,7 @@
       <div class='container'>
         <div class='row'>
           <div class="title">
-            <h2>WELCOME</h2>
+            <h2>Hello World</h2>
             <h4>H.SiK.E</h4>
           </div>
           <img class='me-logo' src='../assets/images/head-pic.png' alt='oops, 出了点问题，图片无法加载'>
@@ -24,7 +24,7 @@
       <a href="#me"><i class="fa fa-angle-double-down"></i></a>
     </div>
     <!--关于本人-->
-    <div id="me" class="about-me">
+    <!--<div id="me" class="about-me">
       <div class="container">
         <div class="row myself">
           <div class="title">
@@ -36,7 +36,7 @@
     </div>
     <div class="down">
       <a href="#site"><i class="fa fa-angle-double-down"></i></a>
-    </div>
+    </div>-->
     <!--关于本站-->
     <div id="site" class="about-site">
       <div class="container">
