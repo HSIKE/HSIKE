@@ -1,38 +1,37 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Welcome from "../components/Welcome";
-import Home from "../components/Home";
+//import Home from "../components/Home";
 import ArticleList from "../components/ArticleList";
 import Article from "../components/Article";
+import Login from "../components/Login";
+import Register from "../components/Register";
 
 Vue.use(Router);
 
 export default new Router({
   mode:'history',
+  base:'notes',
   routes: [
     {
-      path:'/',
-      name:'welcome',
-      component:Welcome,
+      path:'/article/:id',
+      name:'article',
+      component:Article
     },
     {
-      path:'/notes',
-      name:'notes',
-      component:Home,
-      children:[
-        {
-          path:'article/:id?',
-          name:'article',
-          component:Article
-        },
-        {
-          path:':sort?/:tag?',
-          name:'list',
-          component:ArticleList
-        },
-        
-      ]
-    }
+      path:'/login',
+      name:'login',
+      component:Login
+    },
+    {
+      path:'register',
+      name:'register',
+      component:Register
+    },
+    {
+      path:'/:pid?/:tag?',
+      name:'articleList',
+      component:ArticleList,
+    },
   ],
   linkActiveClass:'active',
   linkExactActiveClass:'ex-active'

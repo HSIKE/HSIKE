@@ -1,13 +1,14 @@
 import Vue from 'vue'
-import App from './App'
+import Notes from './Notes'
 import router from './router'
+import axios from 'axios'
 
-Vue.config.productionTip = false;
+axios.defaults.headers.post['Content-Type']='application/x-www-form-urlencoded';
+Vue.prototype.$axios=axios;
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: '#notes',
   router,
-  components: { App },
-  template: '<App/>'
+  components: { Notes },
+  template: '<Notes/>'
 });

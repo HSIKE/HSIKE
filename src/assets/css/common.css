@@ -1,5 +1,12 @@
-.header {
+#notes {
   width: 100%;
+}
+.header,
+.main,
+.footer {
+  width: 100%;
+}
+.header {
   background: #ffffff;
   -webkit-box-shadow: 1px 0 15px 1px #d6d6d6;
   -moz-box-shadow: 1px 0 15px 1px #d6d6d6;
