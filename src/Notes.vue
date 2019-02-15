@@ -9,7 +9,7 @@
           <div class='nav'>
             <router-link class='nav-item' to='/' exact>首页</router-link>
             <router-link class='nav-item' v-for='nav in navList'
-                :key='`nav${nav.Id}`' :to='`/${nav.value}`'>
+                :key='`nav${nav.Id}`' :to='`/${nav.value}`' v-if="nav.pid==0">
               {{ nav.navName }}
             </router-link>
             <router-link class='nav-item login' to='/login' title='登录'>
@@ -94,15 +94,10 @@
   import ToTop from './components/ToTop';
   import co from './components/coConfig'
   export default {
-    name: 'App',
+    name: 'Notes',
     components:{ ToTop },
     data(){
-      return {
-        navList:[]
-      }
-    },
-    created() {
-      this.getNavList();
+      return { navList:[] }
     },
     methods:{
       searchFocus(e){
@@ -113,16 +108,18 @@
       getNavList(){
         this.$axios.get(`${co}/navs/navList`)
             .then((resp)=>{
-              console.log(resp);
+              //console.log(resp);
               this.navList=resp.data;
             })
       }
-    }
+    },
+    created() { this.getNavList() },
   }
 </script>
 
 <style>
   @import "assets/css/public.css";
   @import "assets/css/font-awesome.min.css";
-  @import "assets/css/common.css";
+  @import "assets/css/notes.css";
+  @import "assets/css/quill.snow.css";
 </style>

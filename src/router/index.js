@@ -28,7 +28,7 @@ export default new Router({
       component:Register
     },
     {
-      path:'/:pid?/:tag?',
+      path:'/:pid?/:tag?/:type?',
       name:'articleList',
       component:ArticleList,
     },

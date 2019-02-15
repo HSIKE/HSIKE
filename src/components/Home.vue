@@ -119,5 +119,5 @@
 </script>
 
 <style scoped>
-  @import "../assets/css/common.css";
+  @import "../assets/css/notes.css";
 </style>

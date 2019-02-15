@@ -33,7 +33,7 @@
     position: fixed;
     bottom:10px;right:-50px;
     cursor: pointer;
-    color: #fff3e3;
+    color: white;
     background: #c6c6c6;
     z-index: 1;
     -webkit-transition: all .5s;
