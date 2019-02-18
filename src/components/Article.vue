@@ -12,7 +12,7 @@
           类型: {{ article.type }}<i></i>
           标签:
           <router-link class="links" v-for="tag in getTags(article.tags)"
-              :key="`art-${tag}`" :to="`/${article.pid}/${tag}`">
+              :key="`art-${tag}`" :to="`/tag/${tag}`">
             {{ tag }}&nbsp;
           </router-link>
         </div>
@@ -20,6 +20,9 @@
       <div class="ql-container ql-snow">
         <div class="description" v-text="article.description"></div>
         <div class="ql-editor" v-html="article.content"></div>
+      </div>
+      <div class="return">
+        <button @click="$router.back()">返回文章列表</button>
       </div>
     </div>
     <div class="failed" v-else>失败</div>
@@ -31,9 +34,7 @@
   export default {
     name:"Article",
     data(){
-      return{
-        article:null
-      }
+      return{ article:null }
     },
     methods:{
       getArticle(Id){
@@ -42,18 +43,21 @@
           method:'get',
           params:{ Id }
         }).then(resp=>{
-          this.article=resp.data
+          (typeof resp.data)=='object' ? this.article=resp.data : ''
         })
       }
     },
     computed:{
-      timeFormat(){ return (time)=>new Date(time).toLocaleString() },
-      getTags(){ return (str)=> str.split('、')}
+      timeFormat(){ return time=>new Date(time).toLocaleString() },
+      getTags(){ return tags=> tags.split('、')}
+    },
+    watch:{
+      $route(v){ this.getArticle(v.params.Id) }
     },
     created(){
       //console.log(this.$route.params.id);
       //console.log('css'.split('、'));
-      this.getArticle(this.$route.params.id)
+      this.getArticle(this.$route.params.Id)
     }
   }
 </script>
@@ -61,7 +65,7 @@
 <style scoped>
   .article{
     background: white;
-    padding:0 15px;
+    padding:0 15px 20px;
     margin-left: -15px;
     margin-right: -15px;
     border:1px solid #e3e3e3;
@@ -79,14 +83,21 @@
     color:#999;
   }
   .title{
-    font-size: 20px;
+    font-size: 24px;
     line-height: 40px;
   }
   .links{ color:deepskyblue }
-  .links:hover{ color: #ffa496
-  }
+  .links:hover{ color: #ffa496 }
   .info i{
     display: inline-block;
     width:8px;
   }
+  .return{ text-align: right }
+  .return button{
+    height: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 15px;
+  }
+  .return button:hover{ color:#099 }
 </style>

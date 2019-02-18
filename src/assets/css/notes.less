@@ -28,11 +28,20 @@
     float:right;
     height:100%;
     line-height: 40px;
+    &>*{ float: left }
   }
+  .box{ position: relative; }
+  .dropDown{
+    display: none;
+    position: absolute;
+    z-index: 2001;
+    background: white;
+  }
+  .box:hover .dropDown{ display: block }
   .nav-item{
-    display: inline-block;
-    padding:0 8px;
-    margin:0 12px;
+    display: block;
+    padding:0 5px;
+    margin:0 5px;
     height:30px;
     line-height: 30px;
     color:#099;
@@ -107,7 +116,24 @@
       color:#999;
     }
   }
-  .content{
-    padding:15px;
+  .content{ padding:10px 15px  }
+  .rec{
+    line-height: 24px;
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    &:hover{ color:#099 }
+  }
+}
+.tags .content a{
+  display: inline-block;
+  font-size: 14px;
+  padding:0 3px;
+  color:#888;
+  &:hover{
+    background: #099;
+    color:white;
+    border-radius: 2px;
   }
 }

@@ -13,7 +13,7 @@ export default new Router({
   base:'notes',
   routes: [
     {
-      path:'/article/:id',
+      path:'/article/:Id',
       name:'article',
       component:Article
     },
