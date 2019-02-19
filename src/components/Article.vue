@@ -92,6 +92,10 @@
     display: inline-block;
     width:8px;
   }
+  .description{
+    text-indent: 2em;
+    padding:0 15px 20px;
+  }
   .return{ text-align: right }
   .return button{
     height: 30px;
