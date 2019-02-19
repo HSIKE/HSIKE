@@ -43,7 +43,8 @@
           method:'get',
           params:{ Id }
         }).then(resp=>{
-          (typeof resp.data)=='object' ? this.article=resp.data : ''
+          console.log(resp.data);
+          (typeof resp.data)==='object' ? this.article=resp.data : ''
         })
       }
     },

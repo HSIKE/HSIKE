@@ -66,8 +66,8 @@
           params:data
         }).then(resp=>{
           let r=resp.data;
-          this.articles=
-              (typeof r)==='string' ? [] : r;
+          console.log(r);
+          this.articles=((typeof r)==='string' ? [] : r);
         })
       },
       pageNext(){ this.page+=1 },
@@ -145,7 +145,8 @@
     overflow: hidden;
     width:100%;
     line-height:1.2;
-    padding:10px;
+    padding:0 10px;
+    margin:10px 0;
     color:#666;
     font-size: 16px;
     cursor: default;
