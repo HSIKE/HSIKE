@@ -137,6 +137,7 @@
     </div>
     <div class='footer'>
     </div>
+    <!--<Loading/>-->
     <ToTop/>
   </div>
 </template>
@@ -144,9 +145,10 @@
 <script>
   import ToTop from './components/ToTop';
   import co from './components/coConfig'
+  import Loading from './components/Loading';
   export default {
     name: 'Notes',
-    components:{ ToTop },
+    components:{Loading, ToTop },
     data(){
       return {
         navList:[],

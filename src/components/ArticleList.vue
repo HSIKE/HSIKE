@@ -66,7 +66,6 @@
           params:data
         }).then(resp=>{
           let r=resp.data;
-          console.log(r);
           this.articles=((typeof r)==='string' ? [] : r);
         })
       },
@@ -150,6 +149,7 @@
     color:#666;
     font-size: 16px;
     cursor: default;
+    text-align: justify;
   }
   .info{
     font-size: 14px;

@@ -22,7 +22,7 @@
         <div class="ql-editor" v-html="article.content"></div>
       </div>
       <div class="return">
-        <button @click="$router.back()">返回文章列表</button>
+        <router-link :to="`/${article.pid}`">返回文章列表</router-link>
       </div>
     </div>
     <div class="failed" v-else>失败</div>
@@ -98,11 +98,11 @@
     padding:0 15px 20px;
   }
   .return{ text-align: right }
-  .return button{
+  .return a{
     height: 30px;
     cursor: pointer;
     font-size: 14px;
     margin-right: 15px;
   }
-  .return button:hover{ color:#099 }
+  .return a:hover{ color:#099 }
 </style>

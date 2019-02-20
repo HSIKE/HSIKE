@@ -1,6 +1,6 @@
 <template>
-  <div class="loading">
-    加载.gif
+  <div class="loading" style="background: white">
+    <img src="../assets/images/loading.gif">
   </div>
 </template>
 
