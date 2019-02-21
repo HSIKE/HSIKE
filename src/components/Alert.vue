@@ -5,10 +5,11 @@
         <!--<h4 class="title">错误信息：</h4>-->
         <div class="msgs">
           <p v-for="(msg,index) in alertMsg" :key="`msg${index}`"
-              v-text="`${msg}`"></p>
+              v-html="`${msg}`"></p>
         </div>
-        <div class="close">
-          <button @click="resetMsg">我知道了</button>
+        <div class="close clear">
+          <button class="disable" @click="off" v-if="shouldShow">永久关闭</button>
+          <button class="ok" @click="resetMsg">我知道了</button>
         </div>
       </div>
     </div>
@@ -21,14 +22,16 @@
     computed:{
       status(){ return this.$root.$data.store.state.status },
       alertMsg(){ return this.$root.$data.store.state.alertMsg },
+      shouldShow(){ return this.$root.$data.store.state.count >= 3 }
     },
     methods:{
       resetMsg(){
         this.$root.$data.store.hide.call(this.$root.$data.store);
         setTimeout(()=>{
           this.$root.$data.store.reset.call(this.$root.$data.store)
-        },1000)
-      }
+        },500)
+      },
+      off(){ this.$root.$data.store.off.call(this.$root.$data.store) }
     }
   }
 </script>
@@ -45,7 +48,7 @@
   }
   .alert-con{
     position: absolute;
-    width:400px;
+    width:360px;
     opacity: 1;
     background: white;
     top:50%;left:50%;
@@ -63,15 +66,12 @@
   .msgs{
     font-size: 15px;
     line-height: 1;
-    padding:15px 15px 5px;
+    padding:10px 15px 0;
   }
-  .msgs p{
-    padding:3px 0;
-  }
+  .msgs p{ padding:5px 0 }
   .close{
-    height:31px;
+    height:30px;
     padding:3px 15px;
-    text-align: right;
   }
   .close button{
     font-size: 14px;
@@ -80,14 +80,20 @@
     cursor: pointer;
     color:#009999;
   }
+  .close .disable{
+    float: left;
+    color:darkorange;
+  }
+  .close .disable:hover{ color:red }
+  .close .ok{ float:right }
   .fade-enter,.fade-leave-to{
     opacity: 0;
   }
   .fade-enter-active,.fade-leave-active{
-    -webkit-transition: opacity 1s;
-    -moz-transition: opacity 1s;
-    -ms-transition: opacity 1s;
-    -o-transition: opacity 1s;
-    transition: opacity 1s;
+    -webkit-transition: opacity 0.5s;
+    -moz-transition: opacity 0.5s;
+    -ms-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    transition: opacity 0.5s;
   }
 </style>

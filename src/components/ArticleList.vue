@@ -2,7 +2,7 @@
   <keep-alive>
     <div class="articleList">
       <div class="head" v-html="breadCrumb"></div>
-      <Loading v-if="loading" style="height:800px"/>
+      <Loading v-if="loading" style="height:600px"/>
       <div class="content" v-else-if="articles.length">
         <ul class="articles">
           <li class="art" v-for="art in articles" :key="`a${art.Id}`">
@@ -80,8 +80,8 @@
           let data=resp.data;
           if(Array.isArray(data)){
             this.articles=data;
-            if(data.length===0) this.showAlert('Sorry，没有了...');
-          }else this.showAlert('服务器被玩坏了...获取列表失败...')
+            if(data.length===0) this.showAlert('Sorry...这个真没有...');
+          }else this.showAlert('服务器被玩坏了...获取数据失败...')
         })
       },
       showAlert(msg){ this.$root.$data.store.show.call(this.$root.$data.store,msg) },
@@ -127,6 +127,7 @@
 <style scoped>
   .articleList{
     padding:10px 15px 15px;
+    min-height: 800px;
     margin-left: -15px;
     margin-right: -15px;
     background: white;

@@ -6,9 +6,11 @@
           <router-link class='logo' to='/' exact>
             <img src='./assets/images/head-pic.png' alt='logo'/>
           </router-link>
-          <div class='nav'>
-            <router-link class='nav-item' to='/' exact>首页</router-link>
-            <div v-for='nav in navList' :key='`nav${nav.Id}`' class="box">
+          <ul class='nav'>
+            <li class="nav-box">
+              <router-link class='nav-item' to='/' exact>首页</router-link>
+            </li>
+            <li v-for='nav in navList' :key='`nav${nav.Id}`' class="nav-box">
               <router-link class='nav-item' :to='`/${nav.value}`'>
                 {{ nav.navName }}
               </router-link>
@@ -18,11 +20,13 @@
                   {{ n.navName }}
                 </router-link>
               </div>
-            </div>
-            <router-link class='nav-item login' to='/login' title='登录'>
-              <i class="fa fa-user-circle-o"></i>
-            </router-link>
-          </div>
+            </li>
+            <li class="nav-box">
+              <router-link class='nav-item login' to='/login' title='登录'>
+                <i class="fa fa-user-circle-o"></i>
+              </router-link>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -30,7 +34,9 @@
       <div class='container clear'>
         <div class='right'>
           <div class='con-right'>
-            <router-view></router-view>
+            <transition name="fast-fade" mode="out-in">
+              <router-view></router-view>
+            </transition>
           </div>
         </div>
         <div class='left'>
@@ -187,7 +193,7 @@
               }else this.showAlert('抱歉，服务器被玩坏了...获取推荐失败...')
             })
       },
-      showAlert(msg){ this.$root.$data.store.show.call(this.$root.$data.store,msg) },
+      showAlert(msg){ this.$root.$data.store.show.call(this.$root.$data.store, msg) },
     },
     created() {
       this.getNavList();
@@ -201,4 +207,16 @@
   @import "assets/css/font-awesome.min.css";
   @import "assets/css/notes.css";
   @import "assets/css/quill.snow.css";
+  .fast-fade-enter-to,
+  .fast-fade-leave{ opacity:1 }
+  .fast-fade-enter,
+  .fast-fade-leave-to{ opacity:0 }
+  .fast-fade-enter-active,
+  .fast-fade-leave-active{
+    -webkit-transition: opacity 0.1s;
+    -moz-transition: opacity 0.1s;
+    -ms-transition: opacity 0.1s;
+    -o-transition: opacity 0.1s;
+    transition: opacity 0.1s;
+  }
 </style>

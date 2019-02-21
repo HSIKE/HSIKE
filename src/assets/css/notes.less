@@ -27,36 +27,34 @@
   .nav{
     float:right;
     height:100%;
-    line-height: 40px;
-    &>*{ float: left }
   }
-  .box{ position: relative; }
+  .nav-box{
+    position: relative;
+    float: left;
+    &:hover .dropDown{ display: block }
+  }
   .dropDown{
     display: none;
+    width:auto;
     position: absolute;
     z-index: 2001;
     background: white;
   }
-  .box:hover .dropDown{ display: block }
   .nav-item{
-    display: block;
     padding:0 5px;
-    margin:0 5px;
-    height:30px;
+    margin:5px;
+    display: block;
     line-height: 30px;
+    height:30px;
     color:#099;
     font-weight: bold;
-    &.active{color:@navActive}
-    &:hover{color:@navActive;}
+    &.active{ color:@navActive }
+    &:hover{ color:@navActive }
   }
-  .login{
-    font-size: 20px;
-    padding-right: 0;
-    margin-right: 0;
-  }
+  .login{ font-size: 20px }
 }
-.main{margin-top: 30px;}
-.con-left,.con-right{padding-top: 1px;}
+.main{ margin-top: 30px }
+.con-left,.con-right{ padding-top: 1px }
 .con-item{
   background: white;
   border:1px solid #e3e3e3;
@@ -118,3 +116,4 @@
     &:hover{ color:#099 }
   }
 }
+

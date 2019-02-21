@@ -22,11 +22,10 @@
         <p class="description" v-text="article.description"></p>
         <div class="ql-editor" v-html="article.content"></div>
         <p class="announce">
-          作者自己是个菜鸡，正在熬夜学习中，如有错误或者欢迎指正~~
+          作者自己是个菜鸡，正在学习中，如有错误、遗漏之处或者欢迎指正~~
         </p>
       </div>
       <div class="return">
-        <p></p>
         <router-link :to="`/${article.pid}`">返回文章列表</router-link>
       </div>
     </div>
@@ -69,13 +68,15 @@
         }).then(resp=>{
           this.loading=false;
           let data=resp.data;
-          if(Array.isArray(data)) this.article=data[0];
+          if(Array.isArray(data)){
+            data.length ? this.article=data[0] : this.showAlert('Sorry，这个真没有...');
+          }else this.showAlert('服务器被玩坏了...获取数据失败...')
         })
       }
     },
     computed:{
       timeFormat(){ return time=>new Date(time).toLocaleString() },
-      getTags(){ return tags=> tags.split('、')}
+      getTags(){ return tags=> tags.split('、') }
     },
     watch:{
       $route(v){
