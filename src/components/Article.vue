@@ -1,6 +1,7 @@
 <template>
   <div class="article">
-    <div class="success" v-if="article">
+    <Loading v-if="loading" style="height:800px"/>
+    <div class="success" v-else-if="article">
       <div class="head">
         <p class="title">{{ article.title }}</p>
         <div class="info">
@@ -18,23 +19,46 @@
         </div>
       </div>
       <div class="ql-container ql-snow">
-        <div class="description" v-text="article.description"></div>
+        <p class="description" v-text="article.description"></p>
         <div class="ql-editor" v-html="article.content"></div>
+        <p class="announce">
+          作者自己是个菜鸡，正在熬夜学习中，如有错误或者欢迎指正~~
+        </p>
       </div>
       <div class="return">
+        <p></p>
         <router-link :to="`/${article.pid}`">返回文章列表</router-link>
       </div>
     </div>
-    <div class="failed" v-else>失败</div>
+    <div class="noResult" v-else>
+      <div class="box">
+        <p class="tips">
+          点得不错，但很抱歉<br/>
+          暂时没有找到你想看的<br/>
+          可能还没来得及上传？<br/>
+          或者已经被删除了？<br/>
+          你可以选择：<br/>
+          1、点击那里的 "联系我" 发起催更 &nbsp;
+          <span style="color:#009999;font-weight:bold">→</span>
+        </p>
+        <button @click="pagePrev" v-if="page!==1">2、返回上一页</button>
+        <button @click="$router.back()" v-else>2、返回之前页面</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import co from './coConfig';
+  import Loading from "./Loading";
   export default {
     name:"Article",
+    components:{ Loading },
     data(){
-      return{ article:null }
+      return{
+        article:null,
+        loading:true
+      }
     },
     methods:{
       getArticle(Id){
@@ -43,8 +67,9 @@
           method:'get',
           params:{ Id }
         }).then(resp=>{
-          console.log(resp.data);
-          (typeof resp.data)==='object' ? this.article=resp.data : ''
+          this.loading=false;
+          let data=resp.data;
+          if(Array.isArray(data)) this.article=data[0];
         })
       }
     },
@@ -53,13 +78,12 @@
       getTags(){ return tags=> tags.split('、')}
     },
     watch:{
-      $route(v){ this.getArticle(v.params.Id) }
+      $route(v){
+        this.loading=true;
+        this.getArticle(v.params.Id);
+      }
     },
-    created(){
-      //console.log(this.$route.params.id);
-      //console.log('css'.split('、'));
-      this.getArticle(this.$route.params.Id)
-    }
+    created(){ this.getArticle(this.$route.params.Id) }
   }
 </script>
 
@@ -97,7 +121,10 @@
     text-indent: 2em;
     padding:0 15px 20px;
   }
-  .return{ text-align: right }
+  .return{
+    text-align: right;
+    padding:0 15px
+  }
   .return a{
     height: 30px;
     cursor: pointer;

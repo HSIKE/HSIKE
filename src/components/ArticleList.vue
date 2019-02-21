@@ -2,7 +2,8 @@
   <keep-alive>
     <div class="articleList">
       <div class="head" v-html="breadCrumb"></div>
-      <div class="content" v-if="articles.length">
+      <Loading v-if="loading" style="height:800px"/>
+      <div class="content" v-else-if="articles.length">
         <ul class="articles">
           <li class="art" v-for="art in articles" :key="`a${art.Id}`">
             <p class="title">
@@ -31,17 +32,24 @@
         </ul>
         <div class="pageSwitch">
           <button @click="pagePrev">上一页</button>
+          <span>{{ page }}</span>
           <button @click="pageNext">下一页</button>
         </div>
       </div>
       <div class="noResult" v-else>
-        <p>
-          Oops~ Something Unexpected Happens<br/>
-          No Article Was Found<br/>
-          Sorry For That...
-        </p>
-        <button @click="pagePrev" v-if="page!==1">返回上一页</button>
-        <button @click="$router.back()" v-if="page===1">返回之前页面</button>
+        <div class="box">
+          <p class="tips">
+            点得不错，但很抱歉<br/>
+            暂时没有找到你想看的<br/>
+            可能还没来得及上传？<br/>
+            或者已经被删除了？<br/>
+            你可以选择：<br/>
+            1、点击那里的 "联系我" 发起催更 &nbsp;
+            <span style="color:#009999;font-weight:bold">→</span>
+          </p>
+          <button @click="pagePrev" v-if="page!==1">2、返回上一页</button>
+          <button @click="$router.back()" v-else>2、返回之前页面</button>
+        </div>
       </div>
     </div>
   </keep-alive>
@@ -49,13 +57,16 @@
 
 <script>
   import co from './coConfig';
+  import Loading from "./Loading";
   export default {
     name:"ArticleList",
+    components:{ Loading },
     data(){
       return{
         reqData:null,
         articles:[],
         page:1,
+        loading:true
       }
     },
     methods:{
@@ -65,12 +76,29 @@
           method:'get',
           params:data
         }).then(resp=>{
-          let r=resp.data;
-          this.articles=((typeof r)==='string' ? [] : r);
+          this.loading=false;
+          let data=resp.data;
+          if(Array.isArray(data)){
+            this.articles=data;
+            if(data.length===0) this.showAlert('Sorry，没有了...');
+          }else this.showAlert('服务器被玩坏了...获取列表失败...')
         })
       },
-      pageNext(){ this.page+=1 },
-      pagePrev(){ this.page===1 ? alert('已经是第一页了！') : this.page-=1 }
+      showAlert(msg){ this.$root.$data.store.show.call(this.$root.$data.store,msg) },
+      pageNext(){
+        if(this.articles.length<10) this.showAlert('Sorry，没有更多了...请别点了...');
+        else{
+          this.page+=1;
+          this.getArticleList(this.getReqData);
+        }
+      },
+      pagePrev(){
+        if(this.page===1) this.showAlert('请不要再点了，已经是第一页了');
+        else{
+          this.page-=1;
+          this.getArticleList(this.getReqData)
+        }
+      }
     },
     computed:{
       getReqData(){ return Object.assign({},this.$route.params,{ page:this.page }) },
@@ -86,12 +114,13 @@
       timeFormat(){ return (time)=> new Date(time).toLocaleString() }
     },
     watch:{
-      $route(){ this.page=1 },
-      getReqData(v){ this.getArticleList(v) }
+      $route(){
+        this.page=1;
+        this.loading=true;
+        this.getArticleList(this.getReqData);
+      }
     },
-    created(){
-      this.getArticleList(this.getReqData);
-    }
+    created(){ this.getArticleList(this.getReqData) }
   }
 </script>
 
@@ -170,24 +199,19 @@
   .pageSwitch{
     text-align: center;
     height: 30px;
+    font-size: 14px;
+    color:#555;
+  }
+  .pageSwitch span{
+    display: inline-block;
+    padding:0 5px;
+    height:30px;
+    line-height: 30px;
   }
   .pageSwitch button{
     height:100%;
-    padding:0 10px;
+    padding:0 5px;
     cursor: pointer;
-    color:#555;
   }
   .pageSwitch button:hover{ color:#099 }
-  .noResult{
-    padding:30px 0;
-    text-align: center;
-    color:#666;
-  }
-  .noResult p{ line-height: 30px }
-  .noResult button{
-    margin-top: 15px;
-    color:#444;
-    cursor: pointer;
-  }
-  .noResult button:hover{ color:#099 }
 </style>

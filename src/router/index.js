@@ -5,6 +5,7 @@ import ArticleList from "../components/ArticleList";
 import Article from "../components/Article";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import ErrorPage from "../components/ErrorPage";
 
 Vue.use(Router);
 
@@ -23,9 +24,14 @@ export default new Router({
       component:Login
     },
     {
-      path:'register',
+      path:'/register',
       name:'register',
       component:Register
+    },
+    {
+      path:'/error',
+      name:'error',
+      component:ErrorPage
     },
     {
       path:'/:pid?/:tag?/:type?',

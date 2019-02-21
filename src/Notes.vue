@@ -23,16 +23,16 @@
               <i class="fa fa-user-circle-o"></i>
             </router-link>
           </div>
-          <div class='search'>
-            <input type='text' placeholder='试试看搜索？' autocomplete='false'
-                @focus='searchFocus($event)' @blur='searchFocus($event)'>
-            <i class="fa fa-search"></i>
-          </div>
         </div>
       </div>
     </div>
     <div class='main'>
       <div class='container clear'>
+        <div class='right'>
+          <div class='con-right'>
+            <router-view></router-view>
+          </div>
+        </div>
         <div class='left'>
           <ul class='con-left'>
             <li class='con-item statement'>
@@ -64,15 +64,18 @@
                 &nbsp;推荐&nbsp;
                 <span>Recommendations</span>
               </h4>
-              <ul class="content" v-if="recommendations.length">
-                <li v-for="item in recommendations" :key="`rec/${item.Id}`" class="rec">
-                  <router-link :to="`/article/${item.Id}`">
-                    {{ item.title }}
-                  </router-link>
-                </li>
-              </ul>
-              <div class="content" v-else>
-                出了点小问题，暂时无法获取推荐项，刷新试试？
+              <div class="content">
+                <Loading style="height:120px" v-if="loading"/>
+                <ul class="success" v-else-if="recommendations.length">
+                  <li v-for="item in recommendations" :key="`rec/${item.Id}`" class="rec">
+                    <router-link :to="`/article/${item.Id}`">
+                      {{ item.title }}
+                    </router-link>
+                  </li>
+                </ul>
+                <div class="failed" v-else>
+                  出了点小问题，暂时无法获取推荐项，刷新试试？
+                </div>
               </div>
             </li>
             <li class="con-item tags">
@@ -128,17 +131,13 @@
             </li>
           </ul>
         </div>
-        <div class='right'>
-          <div class='con-right'>
-            <router-view></router-view>
-          </div>
-        </div>
       </div>
     </div>
     <div class='footer'>
+      <!--<button @click="alertMsg='hello'">111</button>-->
     </div>
-    <!--<Loading/>-->
     <ToTop/>
+    <Alert/>
   </div>
 </template>
 
@@ -146,50 +145,49 @@
   import ToTop from './components/ToTop';
   import co from './components/coConfig'
   import Loading from './components/Loading';
+  import Alert from "./components/Alert";
   export default {
     name: 'Notes',
-    components:{Loading, ToTop },
+    components:{ Alert, Loading, ToTop },
     data(){
       return {
         navList:[],
-        recommendations:[]
+        recommendations:[],
+        loading:true,
       }
     },
     methods:{
-      searchFocus(e){
-        let search=document.querySelector('div.search');
-        e.type==='focus' ? search.classList.add('active')
-                         : search.classList.remove('active');
-      },
       getNavList(){
         this.$axios.get(`${co}/navs/navList`)
             .then((resp)=>{
-              //console.log(resp);
-              //this.navList=resp.data;
-              let navs=resp.data,
-                  navList=[];
-              for (let item of navs){
-                let children=[];
-                for (let child of navs){
-                  if (item.pid==0 && child.pid==item.Id){
-                    //console.log(child,item);
-                    children.push(child);
+              let data=resp.data;
+              if (Array.isArray(data)){
+                let navList=[];
+                for (let item of data){
+                  let children=[];
+                  for (let child of data){
+                    if (item.pid==0 && child.pid==item.Id) children.push(child);
                   }
+                  Object.assign(item,{ children });
+                  if (item.pid==0){ navList.push(item) }
                 }
-                //console.log(children);
-                Object.assign(item,{ children });
-                //console.log(item);
-                item.pid==0 ? navList.push(item) : '';
-              }
-              this.navList=navList;
-              //console.log(this.navList = navList);
+                this.navList=navList;
+              }else this.showAlert('抱歉，服务器被玩坏了...获取分类导航失败...')
             });
         
       },
       getRecommend(){
         this.$axios.get(`${co}/articles/articleList`)
-            .then(resp=>{ this.recommendations=resp.data })
-      }
+            .then(resp=>{
+              this.loading=false;
+              let data=resp.data;
+              if(Array.isArray(data)){
+                this.recommendations=data;
+                if(data.length===0) this.showAlert('Sorry，这个真没有...')
+              }else this.showAlert('抱歉，服务器被玩坏了...获取推荐失败...')
+            })
+      },
+      showAlert(msg){ this.$root.$data.store.show.call(this.$root.$data.store,msg) },
     },
     created() {
       this.getNavList();
