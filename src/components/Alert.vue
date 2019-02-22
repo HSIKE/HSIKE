@@ -1,15 +1,14 @@
 <template>
   <transition name="fade" appear>
-    <div class="alert" v-if="status">
+    <div class="alert" v-if="isShow">
       <div class="alert-con">
-        <!--<h4 class="title">错误信息：</h4>-->
         <div class="msgs">
           <p v-for="(msg,index) in alertMsg" :key="`msg${index}`"
               v-html="`${msg}`"></p>
         </div>
         <div class="close clear">
-          <button class="disable" @click="off" v-if="shouldShow">永久关闭</button>
-          <button class="ok" @click="resetMsg">我知道了</button>
+          <button class="disable" @click="off" v-if="turnOff">永久关闭</button>
+          <button class="ok" @click="iKnow">我知道了</button>
         </div>
       </div>
     </div>
@@ -20,18 +19,18 @@
   export default {
     name:"Alert",
     computed:{
-      status(){ return this.$root.$data.store.state.status },
-      alertMsg(){ return this.$root.$data.store.state.alertMsg },
-      shouldShow(){ return this.$root.$data.store.state.count >= 3 }
+      isShow(){ return this.$root.store.state.isShow },
+      alertMsg(){ return this.$root.store.state.alertMsg },
+      turnOff(){ return this.$root.store.state.count >= 3 }
     },
     methods:{
-      resetMsg(){
-        this.$root.$data.store.hide.call(this.$root.$data.store);
+      iKnow(){
+        this.$root.store.hide.call(this.$root.store);
         setTimeout(()=>{
-          this.$root.$data.store.reset.call(this.$root.$data.store)
+          this.$root.store.reset.call(this.$root.store)
         },500)
       },
-      off(){ this.$root.$data.store.off.call(this.$root.$data.store) }
+      off(){ this.$root.store.off.call(this.$root.store) }
     }
   }
 </script>
