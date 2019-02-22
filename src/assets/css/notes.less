@@ -8,9 +8,9 @@
   box-shadow: 1px 0 15px 1px #d6d6d6;
 }
 .nav-bar{
+  width:100%;
   height:60px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding:10px 15px;
   position: relative;
   .logo{
     float: left;
@@ -41,42 +41,44 @@
     background: white;
   }
   .nav-item{
-    padding:0 5px;
-    margin:5px;
+    padding:0 0.278rem;
+    margin: 5px 0.278rem;
     display: block;
     line-height: 30px;
-    height:30px;
+    font-size: 1.111rem ;
     color:#099;
     font-weight: bold;
     &.active{ color:@navActive }
     &:hover{ color:@navActive }
   }
-  .login{ font-size: 20px }
+  .login{ font-size: 1.111rem }
 }
 .main{ margin-top: 30px }
-.con-left,.con-right{ padding-top: 1px }
 .con-item{
   background: white;
+  margin-bottom: 1.667rem;
   border:1px solid #e3e3e3;
-  margin-bottom: 30px;
+  &.friends{
+    margin-bottom: 0;
+  }
   .title{
-    height:34px;
-    font-size:16px;
-    line-height: 34px;
+    height:1.889rem;
+    font-size:0.889rem;
+    line-height: 1.889rem;
     font-weight: normal;
-    padding:0 15px;
+    padding:0 0.833rem;
     border-bottom: 1px solid #e3e3e3;
     i{color: #099;}
     span{
-      font-size: 14px;
+      font-size: 0.778rem;
       font-style: italic;
       color:#999;
     }
   }
-  .content{ padding:10px 15px  }
+  .content{ padding:0.556rem 0.833rem  }
   .rec{
-    line-height: 24px;
-    font-size: 15px;
+    line-height: 1.333rem;
+    font-size: 0.833rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -85,7 +87,7 @@
 }
 .tags .content a{
   display: inline-block;
-  font-size: 14px;
+  font-size: 0.778rem;
   padding:0 3px;
   color:#888;
   &:hover{
@@ -101,19 +103,20 @@
   .box{
     position: relative;
     top:-50%;
-    padding:30px 0;
+    padding:1.667rem 0;
     -webkit-transform: translateY(50%);
     -moz-transform: translateY(50%);
     -ms-transform: translateY(50%);
     -o-transform: translateY(50%);
     transform: translateY(50%);
   }
-  p{ line-height: 30px }
+  p{ line-height: 1.667rem }
   button{
-    margin-top: 15px;
-    color:#444;
+    font-size: 1rem;
+    margin-top: 0.556rem;
+    color:#099;
     cursor: pointer;
-    &:hover{ color:#099 }
+    &:hover{ color:darkorange }
   }
 }
 

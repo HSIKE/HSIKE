@@ -37,7 +37,7 @@
 
 <style scoped>
   .alert{
-    z-index: 3000;
+    z-index: 3001;
     position: fixed;
     top:0;bottom:0;
     left:0;right:0;
@@ -47,11 +47,11 @@
   }
   .alert-con{
     position: absolute;
-    width:360px;
+    min-width: 300px;
+    max-width: 400px;
     opacity: 1;
     background: white;
     top:50%;left:50%;
-    /*border:1px solid #0080ad;*/
     -webkit-box-shadow: 0 0 5px 1px rgba(0, 133, 255, 0.18);
     -moz-box-shadow: 0 0 5px 1px rgba(0, 133, 255, 0.18);
     box-shadow: 0 0 5px 1px rgba(0, 133, 255, 0.18);
@@ -63,19 +63,19 @@
   }
   
   .msgs{
-    font-size: 15px;
+    font-size: 0.833rem;
     line-height: 1;
-    padding:10px 15px 0;
+    padding:0.556rem 1.667rem 0 0.833rem;
   }
-  .msgs p{ padding:5px 0 }
+  .msgs p{ padding:0.278rem 0 }
   .close{
-    height:30px;
-    padding:3px 15px;
+    height:1.667rem;
+    padding:0.167rem 0.833rem;
   }
   .close button{
-    font-size: 14px;
-    height:24px;
-    padding:0 5px;
+    font-size: 0.778rem;
+    height:1.333rem;
+    padding:0 0.278rem;
     cursor: pointer;
     color:#009999;
   }

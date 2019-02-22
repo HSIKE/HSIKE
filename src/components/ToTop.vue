@@ -15,12 +15,12 @@
       }
     },
     created() {
-      window.onscroll=()=>{
+      window.addEventListener('scroll',()=>{
         let top=window.pageYOffset||
             document.documentElement.scrollTop||
             document.body.scrollTop;
         this.$refs.top.style.right=top>500 ? '10px' : '';
-      }
+      })
     }
   }
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div id="notes">
-    <div class='header'>
+    <div ref="header" class='header'>
       <div class='container'>
-        <div class='row nav-bar'>
+        <div class='nav-bar'>
           <router-link class='logo' to='/' exact>
             <img src='./assets/images/head-pic.png' alt='logo'/>
           </router-link>
@@ -30,15 +30,8 @@
         </div>
       </div>
     </div>
-    <div class='main'>
+    <div ref="main" class='main'>
       <div class='container clear'>
-        <div class='right'>
-          <div class='con-right'>
-            <transition name="fast-fade" mode="out-in">
-              <router-view></router-view>
-            </transition>
-          </div>
-        </div>
         <div class='left'>
           <ul class='con-left'>
             <li class='con-item statement'>
@@ -137,10 +130,16 @@
             </li>
           </ul>
         </div>
+        <div class='right'>
+          <div class='con-right'>
+            <transition name="fast-fade" mode="out-in">
+              <router-view></router-view>
+            </transition>
+          </div>
+        </div>
       </div>
     </div>
     <div class='footer'>
-      <!--<button @click="alertMsg='hello'">111</button>-->
     </div>
     <ToTop/>
     <Alert/>
@@ -199,6 +198,29 @@
       this.getNavList();
       this.getRecommend();
     },
+    mounted() {
+      window.addEventListener('scroll',()=>{
+        let top=window.pageYOffset||
+            document.documentElement.scrollTop||
+            document.body.scrollTop;
+        let header=this.$refs.header;
+        let main=this.$refs.main;
+        if(top>=60){
+          header.style.position='fixed';
+          header.style.zIndex='3000';
+          if(top<=120) header.style.top=-120+top+'px';
+          if(top>=120) header.style.top='0';
+          header.style.left='0';
+          main.style.marginTop='90px'
+        }else{
+          header.style.position='static';
+          main.style.marginTop=''
+        }
+      });
+      this.$refs.header.addEventListener('mouseover',()=>{
+        this.$refs.header.style.top='0'
+      })
+    }
   }
 </script>
 
