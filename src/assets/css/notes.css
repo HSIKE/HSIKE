@@ -21,6 +21,7 @@
 .nav-bar .logo {
   float: left;
   height: 100%;
+  padding: 3px 0;
 }
 .nav-bar .logo img {
   display: block;
@@ -95,16 +96,6 @@
 }
 .con-item .content {
   padding: 0.556rem 0.833rem;
-}
-.con-item .rec {
-  line-height: 1.333rem;
-  font-size: 0.833rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.con-item .rec:hover {
-  color: #009999;
 }
 .tags .content a {
   display: inline-block;

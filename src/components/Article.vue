@@ -48,11 +48,8 @@
 </template>
 
 <script>
-  import co from './coConfig';
-  import Loading from "./Loading";
   export default {
     name:"Article",
-    components:{ Loading },
     data(){
       return{
         article:null,
@@ -61,17 +58,16 @@
     },
     methods:{
       getArticle(Id){
-        this.$axios({
-          url:`${co}/articles/getArticle`,
-          method:'get',
-          params:{ Id }
-        }).then(resp=>{
-          this.loading=false;
-          let data=resp.data;
-          if(Array.isArray(data)){
-            data.length ? this.article=data[0] : this.showAlert('Sorry，这个真没有...');
-          }else this.showAlert('服务器被玩坏了...获取数据失败...')
-        })
+        this.$axios.get(`${this.$root.cors}/articles/getArticle?Id=${Id}`)
+            .then(resp=>{
+              this.loading=false;
+              let data=resp.data;
+              if(Array.isArray(data)){
+                data.length
+                ? this.article=data[0]
+                : this.showAlert('Sorry，这个真没有...');
+              }else this.showAlert('服务器被玩坏了...获取数据失败...')
+            }).catch(err => this.showAlert(err))
       },
       showAlert(msg){ this.$root.store.show.call(this.$root.store, msg) }
     },
@@ -93,7 +89,6 @@
   .article{
     background: white;
     padding:0 0.833rem 1.111rem;
-    border:1px solid #e3e3e3;
     color:#555;
   }
   .head{

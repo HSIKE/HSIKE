@@ -40,10 +40,7 @@
                 &nbsp;关于&nbsp;
                 <span>Announcement</span>
               </h4>
-              <div class="content">
-                <router-link to="/css">css</router-link>
-                <router-link to="/article/1">article</router-link>
-              </div>
+              <Announcement/>
             </li>
             <li class="con-item contact">
               <h4 class="title">
@@ -63,19 +60,7 @@
                 &nbsp;推荐&nbsp;
                 <span>Recommendations</span>
               </h4>
-              <div class="content">
-                <Loading style="height:120px" v-if="loading"/>
-                <ul class="success" v-else-if="recommendations.length">
-                  <li v-for="item in recommendations" :key="`rec/${item.Id}`" class="rec">
-                    <router-link :to="`/article/${item.Id}`">
-                      {{ item.title }}
-                    </router-link>
-                  </li>
-                </ul>
-                <div class="failed" v-else>
-                  出了点小问题，暂时无法获取推荐项，刷新试试？
-                </div>
-              </div>
+              <Recommendation/>
             </li>
             <li class="con-item tags">
               <h4 class="title">
@@ -84,39 +69,12 @@
                 <span>Tags</span>
               </h4>
               <div class="content">
-                <router-link to="/tag/原型链">原型链</router-link>
                 <router-link to="/tag/作用域">作用域</router-link>
-                <router-link to="/tag/定时器">定时器</router-link>
                 <router-link to="/tag/选择器">选择器</router-link>
                 <router-link to="/tag/盒子模型">盒子模型</router-link>
-                <router-link to="/tag/标签类型">标签类型</router-link>
-                <router-link to="/tag/ES6">ES6</router-link>
                 <router-link to="/tag/数据类型">数据类型</router-link>
-                <router-link to="/tag/样式优先级">样式优先级</router-link>
-                <router-link to="/tag/this">this</router-link>
-                <router-link to="/tag/H5">H5</router-link>
-                <router-link to="/tag/Git">Git</router-link>
-                <router-link to="/tag/弹性布局">弹性布局</router-link>
-                <router-link to="/tag/事件流">事件流</router-link>
-                <router-link to="/tag/浮动">浮动</router-link>
-                <router-link to="/tag/正则">正则</router-link>
-                <router-link to="/tag/定位">定位</router-link>
-                <router-link to="/tag/继承">继承</router-link>
-                <router-link to="/tag/过渡">过渡</router-link>
-                <router-link to="/tag/闭包">闭包</router-link>
                 <router-link to="/tag/变量">变量</router-link>
-                <router-link to="/tag/动画">动画</router-link>
-                <router-link to="/tag/单位">单位</router-link>
-                <router-link to="/tag/媒体查询">媒体查询</router-link>
-                <router-link to="/tag/响应式">响应式</router-link>
-                <router-link to="/tag/居中">居中</router-link>
-                <router-link to="/tag/本地存储">本地存储</router-link>
-                <router-link to="/tag/面向对象">面向对象</router-link>
-                <router-link to="/tag/原型">原型</router-link>
-                <router-link to="/tag/条件语句">条件语句</router-link>
-                <router-link to="/tag/循环">循环</router-link>
-                <router-link to="/tag/变换">变换</router-link>
-                <router-link to="/tag/CSS3">CSS3</router-link>
+                <router-link to="/tag/闭包">闭包</router-link>
               </div>
             </li>
             <li class="con-item friends">
@@ -148,56 +106,37 @@
 
 <script>
   import ToTop from './components/ToTop';
-  import co from './components/coConfig'
-  import Loading from './components/Loading';
   import Alert from "./components/Alert";
+  import Recommendation from "./components/Recommendation";
+  import Announcement from "./components/Announcement";
   export default {
     name: 'Notes',
-    components:{ Alert, Loading, ToTop },
-    data(){
-      return {
-        navList:[],
-        recommendations:[],
-        loading:true,
-      }
-    },
+    components:{ Announcement, Recommendation, Alert, ToTop },
+    data(){ return { navList:[] } },
     methods:{
       getNavList(){
-        this.$axios.get(`${co}/navs/navList`)
+        this.$axios.get(`${this.$root.cors}/navs/navList`)
             .then((resp)=>{
               let data=resp.data;
               if (Array.isArray(data)){
-                let navList=[];
-                for (let item of data){
-                  let children=[];
-                  for (let child of data){
-                    if (item.pid==0 && child.pid==item.Id) children.push(child);
+                if(data.length){
+                  let navList=[];
+                  for (let item of data){
+                    let children=[];
+                    for (let child of data){
+                      if (item.pid==0 && child.pid==item.Id) children.push(child);
+                    }
+                    Object.assign(item,{ children });
+                    if (item.pid==0){ navList.push(item) }
                   }
-                  Object.assign(item,{ children });
-                  if (item.pid==0){ navList.push(item) }
-                }
-                this.navList=navList;
+                  this.navList=navList;
+                }else this.showAlert('数据库出了点小问题, 获取分类导航失败...')
               }else this.showAlert('抱歉，服务器被玩坏了...获取分类导航失败...')
             });
-        
-      },
-      getRecommend(){
-        this.$axios.get(`${co}/articles/articleList`)
-            .then(resp=>{
-              this.loading=false;
-              let data=resp.data;
-              if(Array.isArray(data)){
-                this.recommendations=data;
-                if(data.length===0) this.showAlert('Sorry，这个真没有...')
-              }else this.showAlert('抱歉，服务器被玩坏了...获取推荐失败...')
-            })
       },
       showAlert(msg){ this.$root.$data.store.show.call(this.$root.$data.store, msg) },
     },
-    created() {
-      this.getNavList();
-      this.getRecommend();
-    },
+    created() { this.getNavList() },
     mounted() {
       window.addEventListener('scroll',()=>{
         let top=window.pageYOffset||
@@ -235,10 +174,10 @@
   .fast-fade-leave-to{ opacity:0 }
   .fast-fade-enter-active,
   .fast-fade-leave-active{
-    -webkit-transition: opacity 0.1s;
-    -moz-transition: opacity 0.1s;
-    -ms-transition: opacity 0.1s;
-    -o-transition: opacity 0.1s;
-    transition: opacity 0.1s;
+    -webkit-transition: opacity 0.08s;
+    -moz-transition: opacity 0.08s;
+    -ms-transition: opacity 0.08s;
+    -o-transition: opacity 0.08s;
+    transition: opacity 0.08s;
   }
 </style>

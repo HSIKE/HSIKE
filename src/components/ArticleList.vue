@@ -30,13 +30,13 @@
             <em class="decoration"></em>
           </li>
         </ul>
-        <div class="pageSwitch">
+        <div class="pageSwitch" v-if="articles.length===10">
           <button @click="pagePrev">上一页</button>
           <span>{{ page }}</span>
           <button @click="pageNext">下一页</button>
         </div>
       </div>
-      <NoResult>
+      <NoResult v-else>
         <button @click="pagePrev" v-if="page>1">back to page {{ page-1 }}</button>
       </NoResult>
     </div>
@@ -44,12 +44,10 @@
 </template>
 
 <script>
-  import co from './coConfig';
-  import Loading from "./Loading";
   import NoResult from './NoResult';
   export default {
     name:"ArticleList",
-    components:{NoResult, Loading },
+    components:{ NoResult },
     data(){
       return{
         reqData:null,
@@ -61,7 +59,7 @@
     methods:{
       getArticleList(data){
         this.$axios({
-          url:`${co}/articles/articleList`,
+          url:`${this.$root.cors}/articles/articleList`,
           method:'get',
           params:data
         }).then(resp=>{
@@ -75,11 +73,8 @@
       },
       showAlert(msg){ this.$root.$data.store.show.call(this.$root.$data.store,msg) },
       pageNext(){
-        if(this.articles.length < 10) this.showAlert('Sorry，没有更多了...');
-        else{
-          this.page+=1;
-          this.getArticleList(this.getReqData);
-        }
+        this.page+=1;
+        this.getArticleList(this.getReqData);
       },
       pagePrev(){
         if(this.page===1) this.showAlert('已经是第一页了...');
@@ -100,10 +95,11 @@
         txt+=` / 第 <span style="color:#aaa">${ this.page }</span> 页`;
         return txt;
       },
-      timeFormat(){ return (time)=> new Date(time).toLocaleString() }
+      timeFormat(){ return (time)=> new Date(time).toLocaleString() },
     },
     watch:{
       $route(){
+        this.page=1;
         this.loading=true;
         this.getArticleList(this.getReqData);
       }
@@ -115,9 +111,7 @@
 <style scoped>
   .articleList{
     padding:0.556rem 0.833rem 0.833rem;
-    min-height: 800px;
     background: white;
-    /*border:1px solid #e3e3e3;*/
   }
   .head{
     height:2.222rem;

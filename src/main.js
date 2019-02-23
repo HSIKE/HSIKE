@@ -35,10 +35,16 @@ const store={
   }
 };
 
+const cors='http://127.0.0.1/api';
+
+// 将 Loading 注册为全局组件
+import Loading from './components/Loading';
+Vue.component('Loading',Loading);
+
 new Vue({
   el: '#notes',
   router,
-  data:{ store },
+  data:{ store, cors },
   components: { Notes },
   template: '<Notes/>'
 });
