@@ -16,16 +16,16 @@
 <style scoped>
   .loading{
     width:100%;
-    background:white;
+    height:100%;
     padding-top: 1px;
     position: relative;
-    z-index: 1000;
   }
   .text{
-    position: absolute;
     text-align: center;
-    top:50%;left:50%;
     font-size: 12px;
+    position: relative;
+    top: 50%;
+    margin-left: 50%;
     color:#009999;
     -webkit-transform: translate(-50%,-50%);
     -moz-transform: translate(-50%,-50%);

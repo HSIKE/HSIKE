@@ -4,7 +4,7 @@
       <div class='container'>
         <div class='nav-bar'>
           <router-link class='logo' to='/' exact>
-            <img src='./assets/images/head-pic.png' alt='logo'/>
+            <img src='./assets/images/avatar.png' alt='logo'/>
           </router-link>
           <ul class='nav'>
             <li class="nav-box">
@@ -34,13 +34,13 @@
       <div class='container clear'>
         <div class='left'>
           <ul class='con-left'>
-            <li class='con-item statement'>
+            <li class='con-item announce'>
               <h4 class="title">
                 <i class="fa fa-volume-up"></i>
                 &nbsp;关于&nbsp;
-                <span>Announcement</span>
+                <span>Announcements</span>
               </h4>
-              <Announcement/>
+              <Announce/>
             </li>
             <li class="con-item contact">
               <h4 class="title">
@@ -48,11 +48,21 @@
                 &nbsp;联系我&nbsp;
                 <span>Contact me</span>
               </h4>
-              <div class="content">
-                <span><i class="fa fa-qq"></i></span>
-                <span><i class="fa fa-weixin"></i></span>
-                <i class="fa fa-github"></i>
+              <div class="content contacts">
+                <span class="qq" title="QQ" @click="showQQ">
+                  <i class="fa fa-qq"></i><br/>
+                </span><span class="wechat" title="微信" @click="showWechat">
+                  <i class="fa fa-weixin"></i>
+                </span><span class="email" title="邮箱">
+                  <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                </span><a href="https://github.com/HSIKE?tab=repositories"
+                   class="github" target="_blank" title="github">
+                  <i class="fa fa-github"></i>
+                </a>
               </div>
+            </li>
+            <li class="con-item search">
+              <Search/>
             </li>
             <li class="con-item recommend">
               <h4 class="title">
@@ -84,6 +94,7 @@
                 <span>Links</span>
               </h4>
               <div class="content">
+                <p style="font-size: 0.833rem;color:#888">暂时没有哦</p>
               </div>
             </li>
           </ul>
@@ -98,7 +109,23 @@
       </div>
     </div>
     <div class='footer'>
+      <p class="f-head">
+        Designed & Coded By
+        <a href="mailto:893008093@qq.com" style="font-style: italic">@Mr.Huang</a>,
+        2019 / 02<br/>
+        Based On
+        <a href="https://cn.vuejs.org/v2/guide/" target="_blank">Vue-cli 3.0</a> +
+        <a href="https://www.webpackjs.com/concepts/" target="_blank">webpack v4</a> +
+        <a href="http://www.expressjs.com.cn/" target="_blank">Node / Express</a> +
+        MySQL
+      </p>
     </div>
+    <transition name="fast-fade">
+      <div class="qr_code" v-show="showContact" @click="hideContact">
+        <img ref="qr_qq" src="./assets/images/qr_code_qq.jpg" alt="图片加载失败，刷新试试">
+        <img ref="qr_wechat" src="./assets/images/qr_code_wechat.jpg" alt="图片加载失败，刷新试试">
+      </div>
+    </transition>
     <ToTop/>
     <Alert/>
   </div>
@@ -108,11 +135,15 @@
   import ToTop from './components/ToTop';
   import Alert from "./components/Alert";
   import Recommendation from "./components/Recommendation";
-  import Announcement from "./components/Announcement";
+  import Announce from "./components/Announce";
+  import Search from './components/Search';
   export default {
     name: 'Notes',
-    components:{ Announcement, Recommendation, Alert, ToTop },
-    data(){ return { navList:[] } },
+    components:{Search, Announce, Recommendation, Alert, ToTop },
+    data(){ return {
+      navList:[],
+      showContact:false
+    } },
     methods:{
       getNavList(){
         this.$axios.get(`${this.$root.cors}/navs/navList`)
@@ -130,11 +161,22 @@
                     if (item.pid==0){ navList.push(item) }
                   }
                   this.navList=navList;
-                }else this.showAlert('数据库出了点小问题, 获取分类导航失败...')
-              }else this.showAlert('抱歉，服务器被玩坏了...获取分类导航失败...')
-            });
+                }else this.showAlert('获取分类导航失败...可能是站长删库跑路了...')
+              }else this.showAlert('天啦，出bug啦，赶紧点那边的联系方式让人来修吧~')
+            }).catch(err=>this.showAlert('可能是服务器定期重启，刷新试试？'))
       },
-      showAlert(msg){ this.$root.$data.store.show.call(this.$root.$data.store, msg) },
+      showAlert(msg){ this.$root.store.show.call(this.$root.store, msg) },
+      hideContact(){ this.showContact=false },
+      showQQ(){
+        this.showContact=true;
+        this.$refs.qr_wechat.style.zIndex='1';
+        this.$refs.qr_qq.style.zIndex='2';
+      },
+      showWechat(){
+        this.showContact=true;
+        this.$refs.qr_qq.style.zIndex='1';
+        this.$refs.qr_wechat.style.zIndex='2';
+      }
     },
     created() { this.getNavList() },
     mounted() {
@@ -149,7 +191,7 @@
           header.style.zIndex='3000';
           if(top<=120) header.style.top=-120+top+'px';
           if(top>=120) header.style.top='0';
-          header.style.left='0';
+          header.style.width='100vw';
           main.style.marginTop='90px'
         }else{
           header.style.position='static';
@@ -174,10 +216,10 @@
   .fast-fade-leave-to{ opacity:0 }
   .fast-fade-enter-active,
   .fast-fade-leave-active{
-    -webkit-transition: opacity 0.08s;
-    -moz-transition: opacity 0.08s;
-    -ms-transition: opacity 0.08s;
-    -o-transition: opacity 0.08s;
-    transition: opacity 0.08s;
+    -webkit-transition: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -ms-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+    transition: opacity 0.2s;
   }
 </style>

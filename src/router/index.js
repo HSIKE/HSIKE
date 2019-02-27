@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-//import Home from "../components/Home";
 import ArticleList from "../components/ArticleList";
 import Article from "../components/Article";
 import Login from "../components/Login";
 import Register from "../components/Register";
-import ErrorPage from "../components/ErrorPage";
+import Announcement from '../components/Announcement';
+import ErrorPage from '../components/ErrorPage';
 
 Vue.use(Router);
 
@@ -29,15 +29,20 @@ export default new Router({
       component:Register
     },
     {
-      path:'/error',
-      name:'error',
-      component:ErrorPage
+      path:'/announcement',
+      name:'announcement',
+      component:Announcement
     },
     {
       path:'/:pid?/:tag?/:type?',
       name:'articleList',
       component:ArticleList,
     },
+    {
+      path:'*',
+      name:'errorPage',
+      component:ErrorPage
+    }
   ],
   linkActiveClass:'active',
   linkExactActiveClass:'ex-active'

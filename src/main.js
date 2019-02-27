@@ -16,16 +16,18 @@ const store={
   show(msg){ // 显示
     if(!this.disabled){
       this.state.isShow=true;
-      this.state.count++;
       if(msg)
         Array.isArray(msg)
         ? this.state.alertMsg.concat(msg)
         : this.state.alertMsg.push(msg);
       if(this.state.count >= 3)
-        this.state.alertMsg.push('','<span style="color:darkorange">↓↓↓ 觉得这个提示很烦？点击永久关闭可以禁用</span>')
+        this.state.alertMsg.push('','<span style="color:darkorange">↓↓↓ 弹窗很烦？点击永久关闭可以禁用</span>')
     }
   },
-  hide(){ this.state.isShow=false }, // 隐藏
+  hide(){
+    this.state.isShow=false;
+    this.state.count++;
+  }, // 隐藏
   reset(){ this.state.alertMsg=[] }, // 清空
   off(){ // 禁用
     this.state.isShow=false;
@@ -35,7 +37,7 @@ const store={
   }
 };
 
-const cors='http://127.0.0.1/api';
+const cors='/api';
 
 // 将 Loading 注册为全局组件
 import Loading from './components/Loading';

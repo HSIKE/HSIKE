@@ -1,57 +1,65 @@
 <template>
   <div class='search'>
-    <input type='text' placeholder='试试看搜索？' autocomplete='false'
-        @focus='searchFocus($event)' @blur='searchFocus($event)'>
-    <i class="fa fa-search"></i>
+    <input ref="ipt" type='text' placeholder='试试看搜索？' autocomplete='false'
+           @focus="iptFocus($event)" @blur="iptBlur" v-model="iptVal"
+           @keydown.enter="search">
+    <button ref="btn" @click="search"><i class="fa fa-search"></i></button>
   </div>
 </template>
 
 <script>
   export default {
-    name:"Search"
+    name:"Search",
+    data(){ return{ iptVal:'' } },
+    methods:{
+      iptFocus(e){
+        this.$refs.btn.style.color='#099';
+        e.target.placeholder='按下Enter键可以直接搜索哦~';
+      },
+      iptBlur(e){
+        this.$refs.btn.style.color='';
+        e.target.placeholder='试试看搜索？';
+      },
+      search(){
+        this.iptVal=this.iptVal.replace(/\s/g,'');
+        if(this.iptVal){
+          this.$router.push(`/tag/${this.iptVal}`);
+          this.$refs.ipt.placeholder='试试看搜索？';
+          this.iptVal='';
+          this.$refs.ipt.blur();
+        }else this.$refs.ipt.placeholder='请输入要搜索的内容！'
+      }
+    }
   }
 </script>
 
 <style scoped>
-  .search{
-    float: right;
-    height:40px;
-    width:130px;
-    margin-right: 15px;
+  .search {
+    height: 2.222rem;
+    width: 100%;
     position: relative;
     background: white;
-  /*-webkit-transition: all .4s;
-  -moz-transition: all .4s;
-  -ms-transition: all .4s;
-  -o-transition: all .4s;
-  transition: all .4s;*/
+  }
   input{
-    padding:8px 15px;
-    font-size: 16px;
+    padding:0.444rem 0.833rem;
+    font-size: 0.889rem;
     height:100%;
     width:100%;
-    color: #00dada;
-  &::placeholder{
-     color: #dcdcdc;
-     font-size: 14px;
-   }
+    color: #099;
   }
-  i{
+  input::placeholder{
+    color: #bdbdbd;
+    font-size: 0.778rem;
+  }
+  button{
     position: absolute;
-    right:10px;top:10px;
-    font-size: 16px;
-    color:#dcdcdc;
-    font-weight:200;
-  }
-  &.active{
-     position: absolute;
-     width:50%;
-     right:0;
-     margin-right: 0;
-     -webkit-box-shadow: 0 0 5px 1px rgba(0, 133, 255, 0.18);
-     -moz-box-shadow: 0 0 5px 1px rgba(0, 133, 255, 0.18);
-     box-shadow: 0 0 5px 1px rgba(0, 133, 255, 0.18);
-  i{ display: none }
-  }
+    z-index: 1;
+    right:0;
+    top:0;
+    height:100%;
+    width:2.222rem;
+    font-size: 1.111rem;
+    color:#999;
+    cursor: pointer;
   }
 </style>

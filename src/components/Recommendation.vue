@@ -1,13 +1,13 @@
 <template>
   <div class="content">
-    <Loading style="height:120px" v-if="loading"/>
+    <Loading style="height:8rem" v-if="loading"/>
     <div class="success" v-else-if="recommendations.length">
       <router-link class="rec"
           v-for="item in recommendations"
           :to="`/article/${item.Id}`"
+          :title="item.title"
           :key="`rec/${item.Id}`" v-text="item.title">
       </router-link>
-      
     </div>
     <div class="failed" v-else>
       出了点小问题，暂时无法获取推荐项，刷新试试？
@@ -29,12 +29,9 @@
             .then(resp=>{
               this.loading=false;
               let data=resp.data;
-              if(Array.isArray(data)){
-                data.length
-                ? this.recommendations=data
-                : this.showAlert('Sorry，这个真没有...');
-              }else this.showAlert('抱歉，服务器被玩坏了...获取推荐失败...')
-            })
+              if(Array.isArray(data)) this.recommendations=data;
+              else this.showAlert('出了点小问题...如果能告诉我一下就太谢谢了~')
+            }).catch(err => this.showAlert('天啦，出bug啦，赶紧点那边的联系方式让人来修~'))
       },
     },
     created(){ this.getRecommend() }
@@ -49,6 +46,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color:#666;
   }
   .rec:hover{
     color:#099;

@@ -1,6 +1,6 @@
 <template>
   <div class="article">
-    <Loading v-if="loading" style="height:800px"/>
+    <Loading v-if="loading"/>
     <div class="success" v-else-if="article">
       <div class="head">
         <p class="title">{{ article.title }}</p>
@@ -26,30 +26,20 @@
         </p>
       </div>
       <div class="return">
-        <router-link :to="`/${article.pid}`">返回文章列表</router-link>
+        <router-link :to="`/${article.pid}`" v-html="`看看其他 ${article.pid} 笔记？`"></router-link>
       </div>
     </div>
-    <div class="noResult" v-else>
-      <div class="box">
-        <p class="tips">
-          Sorry, Note Required<br/>
-          Was Not Found<br/>
-          It Might Have Been Removed.<br/>
-          Or Not Uploaded Yet.<br/>
-          <br/>
-          ← Try <span style="font-style: italic;color:#999">Contact Me</span> There ?<br/>
-          Or
-        </p>
-        <button @click="$router.back()">back to the last page you visited</button><br/>
-        <button>try some <span style="font-style: italic">recommended</span> notes</button>
-      </div>
-    </div>
+    <NoResult v-else>
+      <button>try some <span style="font-style: italic">recommended</span> notes</button>
+    </NoResult>
   </div>
 </template>
 
 <script>
+  import NoResult from './NoResult';
   export default {
     name:"Article",
+    components: { NoResult },
     data(){
       return{
         article:null,
@@ -65,9 +55,9 @@
               if(Array.isArray(data)){
                 data.length
                 ? this.article=data[0]
-                : this.showAlert('Sorry，这个真没有...');
-              }else this.showAlert('服务器被玩坏了...获取数据失败...')
-            }).catch(err => this.showAlert(err))
+                : this.article=null;
+              }else this.showAlert('天啦，出bug啦，赶紧点那边的联系方式让人来修吧~')
+            }).catch(err => this.showAlert('可能是服务器正在定期重启，等下刷新试试？'))
       },
       showAlert(msg){ this.$root.store.show.call(this.$root.store, msg) }
     },
@@ -90,6 +80,7 @@
     background: white;
     padding:0 0.833rem 1.111rem;
     color:#555;
+    height:100%;
   }
   .head{
     padding-top: 1.111rem;
@@ -107,7 +98,7 @@
     font-size: 1.222rem;
     line-height: 2.222rem;
   }
-  .links{ color:deepskyblue }
+  .links{ color:#099 }
   .links:hover{ color: #ffa496 }
   .info i{
     display: inline-block;
