@@ -1,190 +1,210 @@
 @navActive: #00cccc;
-#notes{ width:100% }
-.header,.main,.footer{ width:100% }
-.header{
+#notes {
+  width: 100%;
+}
+.header,
+.main,
+.footer {
+  width: 100%;
+}
+.header {
   background: #ffffff;
   -webkit-box-shadow: 1px 0 15px 1px #d6d6d6;
   -moz-box-shadow: 1px 0 15px 1px #d6d6d6;
   box-shadow: 1px 0 15px 1px #d6d6d6;
 }
-.nav-bar{
-  width:100%;
-  height:60px;
-  padding:10px 15px;
+.nav-bar {
+  width: 100%;
+  height: 60px;
+  padding: 10px 15px;
   position: relative;
-  .logo{
+  .logo {
     float: left;
-    height:100%;
-    padding:3px 0;
+    height: 100%;
+    padding: 3px 0;
     margin-left: 0.556rem;
-    img{
+    img {
       display: block;
-      height:100%;
+      height: 100%;
       border-radius: 50%;
-      -webkit-box-shadow:0 0 10px 1px #ececec;
-      -moz-box-shadow:0 0 10px 1px #ececec;
-      box-shadow:0 0 10px 1px #ececec;
+      -webkit-box-shadow: 0 0 10px 1px #ececec;
+      -moz-box-shadow: 0 0 10px 1px #ececec;
+      box-shadow: 0 0 10px 1px #ececec;
     }
   }
-  .nav{
-    float:right;
-    height:100%;
+  .nav {
+    float: right;
+    height: 100%;
   }
-  .nav-box{
+  .nav-box {
     position: relative;
     float: left;
-    &:hover .dropDown{ display: block }
+    &:hover .dropDown {
+      display: block;
+    }
   }
-  .dropDown{
+  .dropDown {
     display: none;
-    width:auto;
+    width: auto;
     position: absolute;
     z-index: 2001;
     background: white;
   }
-  .nav-item{
-    padding:0 0.278rem;
+  .nav-item {
+    padding: 0 0.278rem;
     margin: 5px 0.278rem;
     display: block;
     line-height: 30px;
-    font-size: 1.111rem ;
-    color:#099;
+    font-size: 1.111rem;
+    color: #099;
     font-weight: bold;
-    &.active{ color:@navActive }
-    &:hover{ color:@navActive }
+    &.active {
+      color: @navActive;
+    }
+    &:hover {
+      color: @navActive;
+    }
   }
-  .login{ font-size: 1.111rem }
+  .login {
+    font-size: 1.111rem;
+  }
 }
-.main{
+.main {
   margin-top: 30px;
 }
-.con-right{
-  height:100%;
+.con-right {
+  height: 100%;
   overflow: hidden;
-  -webkit-box-shadow:0 0 3px 1px #dedede;
-  -moz-box-shadow:0 0 3px 1px #dedede;
-  box-shadow:0 0 3px 1px #dedede;
+  -webkit-box-shadow: 0 0 3px 1px #dedede;
+  -moz-box-shadow: 0 0 3px 1px #dedede;
+  box-shadow: 0 0 3px 1px #dedede;
   border-radius: 5px;
 }
-.con-item{
+.con-item {
   background: white;
   overflow: hidden;
   margin-bottom: 1.667rem;
   //border:1px solid #e3e3e3;
   border-radius: 5px;
-  -webkit-box-shadow:0 0 3px 1px #dedede;
-  -moz-box-shadow:0 0 3px 1px #dedede;
-  box-shadow:0 0 3px 1px #dedede;
-  &.friends{
+  -webkit-box-shadow: 0 0 3px 1px #dedede;
+  -moz-box-shadow: 0 0 3px 1px #dedede;
+  box-shadow: 0 0 3px 1px #dedede;
+  &.friends {
     margin-bottom: 0;
   }
-  .title{
-    height:1.889rem;
-    font-size:0.889rem;
+  .title {
+    height: 1.889rem;
+    font-size: 0.889rem;
     line-height: 1.889rem;
     font-weight: normal;
-    padding:0 0.833rem;
+    padding: 0 0.833rem;
     border-bottom: 1px solid #e3e3e3;
-    i{color: #099;}
-    span{
+    i {
+      color: #099;
+    }
+    span {
       font-size: 0.778rem;
       font-style: italic;
-      color:#999;
+      color: #999;
     }
   }
-  .content{ padding:0.556rem 0.833rem  }
-  .contacts{
+  .content {
+    padding: 0.556rem 0.833rem;
+  }
+  .contacts {
     text-align: center;
     font-size: 1.111rem;
     line-height: 1;
-    span,a{
+    span,
+    a {
       display: inline-block;
       padding: 0.556rem;
       margin: 0.556rem;
       border-radius: 50%;
-      width:2.222rem;
-      height:2.222rem;
+      width: 2.222rem;
+      height: 2.222rem;
       -webkit-transition: transform 0.5s;
       -moz-transition: transform 0.5s;
       -ms-transition: transform 0.5s;
       -o-transition: transform 0.5s;
       transition: transform 0.5s;
       cursor: pointer;
-      &:hover{
-        -webkit-transform: scale(1.08,1.08) rotate(360deg);
-        -moz-transform: scale(1.08,1.08) rotate(360deg);
-        -ms-transform: scale(1.08,1.08) rotate(360deg);
-        -o-transform: scale(1.08,1.08) rotate(360deg);
-        transform: scale(1.08,1.08) rotate(360deg);
+      &:hover {
+        -webkit-transform: scale(1.08, 1.08) rotate(360deg);
+        -moz-transform: scale(1.08, 1.08) rotate(360deg);
+        -ms-transform: scale(1.08, 1.08) rotate(360deg);
+        -o-transform: scale(1.08, 1.08) rotate(360deg);
+        transform: scale(1.08, 1.08) rotate(360deg);
       }
     }
-    .qq{
+    .qq {
       background: #72dfff;
-      color:white;
+      color: white;
     }
-    .wechat{
+    .wechat {
       background: #74c784;
-      color:white;
+      color: white;
     }
-    .email{
+    .email {
       background: #198b66;
-      color:white;
+      color: white;
     }
-    .github{
+    .github {
       background: #686868;
-      color:white;
+      color: white;
     }
   }
 }
-.tags .content a{
+.tags .content a {
   display: inline-block;
   font-size: 0.778rem;
-  padding:0 3px;
-  color:#888;
+  padding: 0 3px;
+  color: #888;
   border-radius: 2px;
-  &:hover{
+  &:hover {
     background: #099;
-    color:white;
+    color: white;
   }
 }
-.qr_code{
+.qr_code {
   position: fixed;
-  top:0;left:0;
-  right:0;bottom:0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 4000;
   background: rgba(0, 0, 0, 0.36);
-  img{
+  img {
     position: absolute;
     width: 200px;
     max-width: 50%;
     z-index: 1;
-    top:50%;
-    left:50%;
-    -webkit-transform: translate(-50%,-50%);
-    -moz-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    -o-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }
 }
-.footer{
-  padding:30px 0 10px;
-  color:#099;
+.footer {
+  padding: 30px 0 10px;
+  color: #099;
   position: absolute;
   z-index: 1;
-  bottom:0;
-  left:0;
-  .f-head{
+  bottom: 0;
+  left: 0;
+  .f-head {
     text-align: center;
     font-size: 0.889rem;
     color: #999;
     line-height: 24px;
-    a{
+    a {
       text-decoration: underline;
-      &:hover{
-        color:#099;
+      &:hover {
+        color: #099;
       }
     }
   }
 }
-

@@ -5,19 +5,19 @@
 </template>
 
 <script>
-  export default {
-    name:"Register"
-  }
+export default {
+  name: "Register"
+};
 </script>
 
 <style scoped>
-  .register{
-    padding:20px 15px;
-    background:white;
-    height: 100%;
-  }
-  .prompt{
-    text-align: center;
-    color:#777;
-  }
+.register {
+  padding: 20px 15px;
+  background: white;
+  height: 100%;
+}
+.prompt {
+  text-align: center;
+  color: #777;
+}
 </style>
